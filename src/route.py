@@ -1,5 +1,6 @@
 import gpxpy
 from math import radians, sin, cos, sqrt, atan2
+from pathlib import Path
 
 
 def haversine(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -36,6 +37,14 @@ def parse_gpx(gpx_string: str) -> list[dict]:
                 )
 
     return points
+
+
+def parse_gpx_file(gpx_path: str) -> list[dict]:
+    """Parse a GPX file from an absolute path into route points."""
+    path = Path(gpx_path)
+    if not path.is_absolute():
+        raise ValueError("gpx_path must be an absolute file path")
+    return parse_gpx(path.read_text(encoding="utf-8"))
 
 
 def downsample(points: list[dict], interval_m: float = 100.0) -> list[dict]:

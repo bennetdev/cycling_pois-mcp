@@ -2,7 +2,7 @@ from fastmcp import FastMCP
 from overpass import OverpassAPI, POIType
 from dotenv import load_dotenv
 import os
-from route import parse_gpx, downsample, find_dry_sections
+from route import parse_gpx_file, downsample, find_dry_sections
 
 mcp = FastMCP(
     "cyclingpois",
@@ -33,7 +33,7 @@ async def find_pois(
 
 @mcp.tool()
 async def find_pois_along_route(
-    gpx: str,
+    gpx_path: str,
     buffer_m: int = 500,
     types: list[POIType] = ["water", "cafe"],
     include_dry_sections: bool = True,
@@ -47,12 +47,12 @@ async def find_pois_along_route(
     - Where is the last water source before the finish?
 
     Args:
-        gpx: Full GPX file content as a string.
+        gpx_path: Absolute path to the GPX file.
         buffer_m: Max distance from the route in meters to include a POI (default 500).
         types: POI categories to search.
         include_dry_sections: If True, also return sections of the route with no POI of the requested types.
     """
-    route_points = parse_gpx(gpx)
+    route_points = parse_gpx_file(gpx_path)
     total_km = route_points[-1]["distance_km"]
     sampled = downsample(route_points, interval_m=100)
 
