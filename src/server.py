@@ -2,9 +2,10 @@ from fastmcp import FastMCP
 from overpass import OverpassAPI, POIType
 from dotenv import load_dotenv
 import os
+from route import parse_gpx, downsample, find_dry_sections
 
 mcp = FastMCP(
-    "cyclingroute",
+    "cyclingpois",
     instructions="Find Places of Interest along the route like water sources, cafes and restaurants. Visualize them on the map.",
 )
 
@@ -28,9 +29,6 @@ async def find_pois(
         types: POI categories to search.
     """
     return await overpass.find_pois(lat, lon, radius_m, types)
-
-
-from route import parse_gpx, downsample, find_dry_sections
 
 
 @mcp.tool()

@@ -113,7 +113,7 @@ class OverpassAPI:
         return results
 
     async def find_pois(
-        self, lat: float, lon: float, radius_m: int, types: list[str]
+        self, lat: float, lon: float, radius_m: int, types: list[POIType]
     ) -> list[dict]:
         unknown = [t for t in types if t not in POI_TAGS]
         if unknown:
@@ -161,7 +161,7 @@ class OverpassAPI:
         self,
         route_points: list[dict],
         buffer_m: int,
-        types: list[str],
+        types: list[POIType],
     ) -> list[dict]:
         unknown = [t for t in types if t not in POI_TAGS]
         if unknown:
