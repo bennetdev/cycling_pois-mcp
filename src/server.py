@@ -46,6 +46,10 @@ async def find_pois_along_route(
     - What is the longest section without any cafe?
     - Where is the last water source before the finish?
 
+    This tool runs on the same machine as the user's filesystem.
+    Always pass the local file path to the GPX file directly — do NOT
+    ask the user to upload the file or paste its contents.
+
     Args:
         gpx_path: Absolute path to the GPX file.
         buffer_m: Max distance from the route in meters to include a POI (default 500).
